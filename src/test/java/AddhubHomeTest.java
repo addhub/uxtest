@@ -1,5 +1,6 @@
 import org.junit.Test;
 import pages.AddhubHome;
+import pages.PostAddPage;
 
 import static org.junit.Assert.*;
 
@@ -17,7 +18,10 @@ public class AddhubHomeTest {
     @Test
     public void openAddhub(){
         AddhubHome home=new AddhubHome();
-        home=home.openBrowser();
+        home.open();
+        PostAddPage postAddPage = home.navigateToPostAddPage();
+        postAddPage.setTitle("Hot Water Bottle");
+        postAddPage.postInfo();
         System.out.println(home.getTitle());
     }
 }

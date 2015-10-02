@@ -1,9 +1,11 @@
 package pages;
 
-import javafx.print.PageOrientation;
 import org.apache.commons.io.FileUtils;
 import org.openqa.selenium.*;
-import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.support.FindBy;
+import org.openqa.selenium.support.PageFactory;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
 
 import java.io.*;
 
@@ -11,55 +13,40 @@ import java.io.*;
  * Created by sasinda on 10/1/15.
  * Modified by Jacqueline on 10/1/15.
  */
-public class AddhubHome extends PageObject{
+public class AddhubHome extends PageObject {
 
-    private String baseUrl;
-    private WebDriver driver;
+    @FindBy(id="usr")
+    WebElement userName_editbox;
+    @FindBy(id="pwd")
+    WebElement password_editbox;
+    @FindBy(xpath = "//input[@value='Login']")
+    WebElement login_button;
+    @FindBy(xpath ="//*[@id='searchmap']/div[2]/a)" )
+    WebElement postAdd_button;
 
-
-    public AddhubHome openBrowser() {
-        baseUrl = "http://10.128.14.59:9000";
-        System.setProperty("webdriver.chrome.driver", this.getClass().getResource("/chromedriver").getPath());
-        driver = new ChromeDriver();
-        driver.get(baseUrl);
-        return this ;
-
+    public AddhubHome open(){
+        driver=openBrowser();
+        PageFactory.initElements(driver,this);
+        return this;
     }
-
     /*login() enters the provided username and password into the corrsponding field and submit the form.
-    *It does this by searching the form field elements on the page by their HTML ids and send characters to the elements
-    */
-    public void login(String username, String pw){
-        WebElement userName_editbox = driver.findElement(By.id("usr"));
-        WebElement password_editbox = driver.findElement(By.id("pwd"));
-        WebElement submit_button = driver.findElement(By.xpath("//input[@value='Login']"));
-
+        *It does this by searching the form field elements on the page by their HTML ids and send characters to the elements
+        */
+    public void login(String username, String pw) {
         userName_editbox.sendKeys(username);
         password_editbox.sendKeys(pw);
-
-        submit_button.click();
+        login_button.click();
     }
 
 
-    private WebElement postButton;
-    private WebElement addButton;
-    private WebElement categoriesList;
 
 
-    public void postInfo() {
-        postButton.click();
-    }
 
-    public void selectsCategory(String category) {
-        categoriesList.findElement(
-                By.linkText(category)).click();
-    }
-
-    public void navigateToPostAddPage(){
-
-        WebElement submit_add = driver.findElement(By.xpath("//*[@id='searchmap']/div[2]/a)"));
-        submit_add.click();
-
+    public PostAddPage navigateToPostAddPage() {
+        postAdd_button.click();
+        WebDriverWait wait=new WebDriverWait(driver,10);
+        wait.until(ExpectedConditions.visibilityOfElementLocated(By.id("title")));
+        return switchTo(PostAddPage.class);
     }
 
     /**
@@ -74,19 +61,12 @@ public class AddhubHome extends PageObject{
     }
 
 
-    public void closeBrowser(){
-        driver.close();
-    }
-
-    public String getTitle(){
-        return driver.getTitle();
-    }
 
 
-    public void saveScreenshot(String screenshotFileName) throws IOException {
-        File screenshot = ((TakesScreenshot) driver).getScreenshotAs(OutputType.FILE);
-        FileUtils.copyFile(screenshot, new File(screenshotFileName));
-    }
+
+
+
+
 
     public WebDriver getDriver() {
         return driver;
