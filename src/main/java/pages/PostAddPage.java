@@ -15,6 +15,9 @@ public class PostAddPage extends PageObject {
     @FindBy(xpath ="" )
     WebElement categoriesList;
 
+    @FindBy(xpath ="" )
+    WebElement description;
+
     @FindBy(xpath = "")
     WebElement postButton;
 
