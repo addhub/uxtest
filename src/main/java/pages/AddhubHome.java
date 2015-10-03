@@ -15,13 +15,13 @@ import java.io.*;
  */
 public class AddhubHome extends PageObject {
 
-    @FindBy(id="usr")
-    WebElement userName_editbox;
-    @FindBy(id="pwd")
-    WebElement password_editbox;
-    @FindBy(xpath = "//input[@value='Login']")
-    WebElement login_button;
-    @FindBy(xpath ="//*[@id='searchmap']/div[2]/a)" )
+//    @FindBy(id="usr")
+//    WebElement userName_editbox;
+//    @FindBy(id="pwd")
+//    WebElement password_editbox;
+//    @FindBy(xpath = "//input[@value='Login']")
+//    WebElement login_button;
+    @FindBy(id="postAd" )
     WebElement postAdd_button;
 
     public AddhubHome open(){
@@ -32,15 +32,11 @@ public class AddhubHome extends PageObject {
     /*login() enters the provided username and password into the corrsponding field and submit the form.
         *It does this by searching the form field elements on the page by their HTML ids and send characters to the elements
         */
-    public void login(String username, String pw) {
-        userName_editbox.sendKeys(username);
-        password_editbox.sendKeys(pw);
-        login_button.click();
-    }
-
-
-
-
+//    public void login(String username, String pw) {
+//        userName_editbox.sendKeys(username);
+//        password_editbox.sendKeys(pw);
+//        login_button.click();
+//    }
 
     public PostAddPage navigateToPostAddPage() {
         postAdd_button.click();
@@ -59,13 +55,6 @@ public class AddhubHome extends PageObject {
         writer.close();
 
     }
-
-
-
-
-
-
-
 
 
     public WebDriver getDriver() {

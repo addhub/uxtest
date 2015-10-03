@@ -9,6 +9,7 @@ import org.openqa.selenium.support.PageFactory;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.concurrent.TimeUnit;
 
 /**
  * Created by sasinda on 10/1/15.
@@ -16,14 +17,16 @@ import java.io.IOException;
 public class PageObject {
 
     private String baseUrl;
-    protected WebDriver driver;
+    protected static WebDriver driver;
 
 
     public WebDriver openBrowser() {
-        baseUrl = "http://10.128.14.59:9000";
+        baseUrl = "http://10.128.6.80:9000";
         System.setProperty("webdriver.chrome.driver", this.getClass().getResource("/chromedriver").getPath());
         driver = new ChromeDriver();
+        driver.manage().timeouts().implicitlyWait(15, TimeUnit.SECONDS);
         driver.get(baseUrl);
+
         return driver;
     }
 

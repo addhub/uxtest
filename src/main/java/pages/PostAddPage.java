@@ -1,8 +1,11 @@
 package pages;
 
+import org.apache.commons.lang.ObjectUtils;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
 
 /**
  * Created by jingxiapang on 10/1/15.
@@ -12,28 +15,28 @@ public class PostAddPage extends PageObject {
     @FindBy(id = "title")
     WebElement title_textbox;
 
-    @FindBy(xpath ="" )
+    @FindBy(id = "category" )
     WebElement categoriesList;
 
-    @FindBy(xpath ="" )
+    @FindBy(id  ="description" )
     WebElement description;
 
-    @FindBy(xpath ="" )
+    @FindBy(id ="keywords" )
     WebElement keywords;
 
-    @FindBy(xpath ="" )
+    @FindBy(id ="address" )
     WebElement address;
-    @FindBy(xpath ="" )
+    @FindBy(id="state" )
     WebElement state;
-    @FindBy(xpath ="" )
+    @FindBy(id ="country" )
     WebElement country;
-    @FindBy(xpath ="" )
+    @FindBy(id="zipcode" )
     WebElement postCode;
 
-    @FindBy(xpath ="" )
+    @FindBy(id = "price")
     WebElement price;
 
-    @FindBy(xpath = "")
+    @FindBy(id = "submit")
     WebElement postButton;
 
 
@@ -42,36 +45,45 @@ public class PostAddPage extends PageObject {
     }
 
     public void selectsCategory(String category) {
-        categoriesList.findElement(
-                By.linkText(category)).click();
+        //categoriesList.findElement(By.linkText(category)).click();
+
+        categoriesList.findElement(By.xpath("//*[@id=\"category\"]/optgroup[1]/option[2]")).click();
     }
 
     public void setdescription(String desc) {
-        title_textbox.sendKeys(desc);
+        description.sendKeys(desc);
     }
 
     public void setKeywords(String key) {
-        title_textbox.sendKeys(key);
+        keywords.sendKeys(key);
     }
     public void setAddress(String addr) {
-        title_textbox.sendKeys(addr);
+        address.sendKeys(addr);
     }
     public void setState(String stateInfo) {
-        title_textbox.sendKeys(stateInfo);
+        state.sendKeys(stateInfo);
     }
     public void setCountry(String countryInfo) {
-        title_textbox.sendKeys(countryInfo);
+        country.sendKeys(countryInfo);
     }
-    public void setPostal(String postCode) {
-        title_textbox.sendKeys(postCode);
+    public void setPostal(String postalCode) {
+        postCode.sendKeys(postalCode);
     }
-    public void setPrice(String price) {
-        title_textbox.sendKeys(price);
+    public void setPrice(String priceNumber) {
+        price.sendKeys(priceNumber);
     }
 
-    public void postInfo() {
+    public PostAdSuccess postInfo() {
         postButton.click();
+        WebDriverWait wait=new WebDriverWait(driver,10);
+        wait.until(ExpectedConditions.visibilityOfElementLocated(By.id("refId")));
+        return switchTo(PostAdSuccess.class);
+
     }
+
+
+
+
 
 
 }
